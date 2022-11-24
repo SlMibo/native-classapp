@@ -8,7 +8,11 @@ const Home = ({ navigation }) => {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
 		  <Text>Welcome</Text>
 		  <Button
-        title="Lista de tareas"
+        title="Mi perfil"
+        onPress={() => navigation.push('Perfil')}
+      />
+      <Button
+        title="Tablero de anuncios"
         onPress={() => navigation.push('Tareas')}
       />
     </View>
