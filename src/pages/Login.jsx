@@ -2,19 +2,21 @@ import { StatusBar } from "expo-status-bar"
 import { container, text, input, button } from "../styles/style"
 import { Text, View, TextInput, TouchableOpacity } from "react-native"
 import { NativeBaseProvider } from "native-base"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import useSession from "../hooks/useSession"
 import SERVER from "../Services";
+import UserContext from '../context/UserContext' 
 
 export function Login({ navigation }) {
+  const {token, setToken} = useContext(UserContext)
   const [form, setForm] = useState({})
   const [errors, setErrors] = useState({})
 
   const { login } = useSession()
 
   const validate = () => {
-    if (form.usuario === undefined) {
-      setErrors({ ...errors, usuario: "* Campo obligatorio" })
+    if (form.email === undefined) {
+      setErrors({ ...errors, email: "* Campo obligatorio" })
       return false
     } else if (form.password === undefined) {
       setErrors({ ...errors, password: "* Campo obligatorio" })
@@ -25,8 +27,8 @@ export function Login({ navigation }) {
 
   const handleSubmitForm = async () => {
     const datos = {
-      usuario: form.usuario,
-      clave: form.password
+      email: form.email,
+      password: form.password
     }
     const url = `${SERVER}/login`
     const content = {
@@ -39,7 +41,8 @@ export function Login({ navigation }) {
     if(response.ok) {
       setForm({})
       setErrors({})
-      login(json.user)
+      login(json)
+      setToken(json.usuario.token)
       navigation.navigate('Home')
     } else {
       setErrors({...errors, login: json.message})
@@ -57,16 +60,16 @@ export function Login({ navigation }) {
           <StatusBar style="auto" />
           <View style={input}>
             <TextInput
-              name="usuario"
+              name="email"
               style={text}
-              placeholder="Usuario"
+              placeholder="Correo electrónico"
               placeholderTextColor="#a3a3a3"
-              value={form.usuario}
-              onChangeText={(value) => setForm({ ...form, usuario: value })}
+              value={form.email}
+              onChangeText={(value) => setForm({ ...form, email: value })}
             />
           </View>
 
-          {"usuario" in errors && <Text>{errors.usuario}</Text>}
+          {"email" in errors && <Text>{errors.email}</Text>}
 
           <View style={input}>
             <TextInput
@@ -80,11 +83,7 @@ export function Login({ navigation }) {
             />
           </View>
 
-          {"password" in errors && <Text>{errors.usuario}</Text>}
-
-          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Text>¿Aún no tienes cuenta? Regístrate</Text>
-          </TouchableOpacity>
+          {"password" in errors && <Text>{errors.email}</Text>}
 
           <TouchableOpacity onPress={onSubmit}>
             <Text style={button}>Iniciar sesión</Text>
