@@ -2,6 +2,29 @@ import { Dimensions } from "react-native-web";
 
 const screenHeight = Dimensions.get('screen').height;
 
+const container = {
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderWidth: 1,
+  //flex: 1,
+  height: '100%',
+  backgroundColor: '#75ffaa'
+}
+
+const input = {
+  backgroundColor: 'rgba(255, 255, 255, 0.5)',
+  borderRadius: 20,
+  width: 300,
+  height: 45,
+  marginBottom: 20,
+}
+
+const text = {
+  height: 50,
+  padding: 10,
+  // flex: 1
+}
+
 const buttonContainer = {
   bottom: screenHeight -50 ,
   right: 20,
@@ -77,6 +100,9 @@ export {
     cancelButton,
     containerTask,
     buttonTask,
-    textTask
+    textTask,
+    container,
+    text,
+    input
 };
   

@@ -15,6 +15,10 @@ const Home = ({ navigation }) => {
         title="Tablero de anuncios"
         onPress={() => navigation.push('Tareas')}
       />
+      <Button
+        title="Inicio de sesión"
+        onPress={() => navigation.push('Login')}
+      />
     </View>
   )
 }
